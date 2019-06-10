@@ -3,6 +3,7 @@
 from decimal import *
 from bs4 import BeautifulSoup
 import sys
+import codecs
 
 class Beer:
     def __init__(self, name, type, country, perc, vol, price):
@@ -36,8 +37,10 @@ def item_to_beer(item):
 
     return Beer(name, type, country, perc, vol, price)
 
-
+# --------------------------------------
+sys.stdin.reconfigure(encoding="utf-8")
 site = sys.stdin.read()
+
 soup = BeautifulSoup(site, 'html.parser')
 table = soup.find("div", id="bodyContent").find("table")
 beer_map = {}
