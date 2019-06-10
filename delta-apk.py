@@ -3,7 +3,6 @@
 from decimal import *
 from bs4 import BeautifulSoup
 import sys
-import codecs
 
 class Beer:
     def __init__(self, name, type, country, perc, vol, price):
