@@ -1,0 +1,46 @@
+body
+{
+    font-family: 'Lato', sans-serif;
+    font-family: 'Acme', sans-serif;
+    background-color: #e5e5e5;
+    color: #3c3d47;
+}
+
+h1
+{
+    text-align: center;
+    font-size: 40pt;
+}
+
+table
+{
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+}
+
+th
+{
+    text-align: left;
+    padding-right: 10pt;
+    padding-bottom: 5pt;
+    font-size: 16pt;
+}
+
+th, td {
+  border-bottom: 1px solid #ccc;
+}
+
+.blink
+{
+    animation: .8s shake infinite alternate;
+}
+
+@keyframes shake {
+  0% { transform: skewX(-15deg); }
+  5% { transform: skewX(15deg); }
+  10% { transform: skewX(-15deg); }
+  15% { transform: skewX(15deg); }
+  20% { transform: skewX(0deg); }
+  100% { transform: skewX(0deg); }  
+}

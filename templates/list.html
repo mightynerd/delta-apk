@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Acme|Lato&display=swap" rel="stylesheet">
+    <title>Deltas APK</title>
+</head>
+
+<body>
+    <ul id="navigation">
+        {% for item in navigation %}
+        <li><a href="{{ item.href }}">{{ item.caption }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <h1>Deltas APK</h1>
+    <h2>{{last_updated}}</h2>
+    <table>
+        <tr>
+            <th>Nr</th>
+            <th>Namn</th>
+            <th>Typ</th>
+            <th>Ursprung</th>
+            <th>Etanol</th>
+            <th>Volym</th>
+            <th>Pris</th>
+            <th class="blink">APK</th>
+        </tr>
+            {% for beer in beers %}
+            <tr>
+                <td style="padding-left: 6pt;">
+                    {{loop.index}}      </td>
+
+                <td>{{beer.name}}       </td>
+                <td>{{beer.type}}       </td>
+                <td>{{beer.country}}    </td>
+                <td>{{beer.perc}}   %   </td>
+                <td>{{beer.vol}}    ml  </td>
+                <td>{{beer.price}}  kr  </td>
+                <td>{{beer.apk}}        </td>
+            </tr>
+            {% endfor %}
+    </table>
+
+    {# a comment #}
+</body>
+
+</html>

@@ -2,6 +2,7 @@
 
 from decimal import *
 from bs4 import BeautifulSoup
+import urllib.request
 import sys
 
 class Beer:
@@ -22,7 +23,7 @@ class Beer:
         return ret.strip("\n\r")
 
 def item_to_beer(item):
-    res = ""
+    resi = ""
     entry = item.find_all("td")
     if len(entry) < 7:
         return False
@@ -37,23 +38,28 @@ def item_to_beer(item):
     return Beer(name, type, country, perc, vol, price)
 
 # --------------------------------------
-sys.stdin.reconfigure(encoding="utf-8")
-site = sys.stdin.read()
+def get_beer_list():
+    url = "https://ohl.dtek.se"
+    with urllib.request.urlopen(url) as site:
+        soup = BeautifulSoup(site, 'html.parser')
 
-soup = BeautifulSoup(site, 'html.parser')
-table = soup.find("div", id="bodyContent").find("table")
-beer_map = {}
+    table = soup.find("div", id="bodyContent").find("table")
+    beer_map = {}
 
-for item in table.find_all("tr"):
-    beer = item_to_beer(item)
-    if beer != False:
-        beer_map[beer.name] = beer
+    for item in table.find_all("tr"):
+        beer = item_to_beer(item)
+        if beer != False:
+            beer_map[beer.name] = beer
 
-list = [(v) for k,v in beer_map.items()]
-list.sort(key=lambda b: b.apk, reverse=True)
-i = 1
-for beer in list:
-        print(str(i) + "," + beer.to_string())
-        i = i + 1
+    list = [(v) for k,v in beer_map.items()]
+    list.sort(key=lambda b: b.apk, reverse=True)
+    return list
 
-print ("Total count: " + str(len(list)))
+def print_beer_list():
+    list = get_beer_list()
+    i = 1
+    for beer in list:
+            print(str(i) + "," + beer.to_string())
+            i = i + 1
+
+    print ("Total count: " + str(len(list)))
