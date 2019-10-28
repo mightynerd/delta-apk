@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+    web:
+        command: uwsgi --ini uwsgi.ini
+        volumes:
+            - ./src:/src
