@@ -2,6 +2,7 @@ version: '3'
 
 services:
     web:
-        command: uwsgi --ini uwsgi.ini
+        #command: uwsgi --ini uwsgi.conf 
+        command: uwsgi --socket :4000 --module delta_apk_web:app
         volumes:
             - ./src:/src

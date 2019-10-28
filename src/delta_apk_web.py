@@ -17,7 +17,7 @@ update_list()
 
 app = Flask(__name__)
 
-@app.route('/apk')
+@app.route('/')
 def apk():
     return render_template('list.html', beers=resolver.get_beer_list(), last_updated="")
 
