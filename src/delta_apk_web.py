@@ -1,25 +1,42 @@
 from flask import Flask, escape, request, render_template
+from apscheduler.schedulers.background import BackgroundScheduler
+
 import delta_apk as resolver
-import schedule
 from datetime import datetime
 import time
 
-global last_updated1
-global beers1
+def get_datetime():
+    return str(datetime.now().strftime("%d.%m.%Y %H:%M:%S"))
+
+last_updated = ""
+last_updated_time = get_datetime()
+beers = resolver.get_beer_list()
 
 def update_list():
-    last_updated1 = datetime.now()
-    beers1 = resolver.get_beer_list()
-    print("Updated list")
+    global beers
+    global last_updated
+    global last_updated_time
+    try:
+        beers = resolver.get_beer_list()
+        last_updated_time = get_datetime()
+        last_updated = "Senast uppdaterad: " + last_updated_time
+        print("Updated list ", last_updated_time)
+    except: 
+        print("Failed to get beer list")
+        last_updated = "Något gick fel vid senaste uppdatering vilket är mindre bra, använder cachad version från " + last_updated_time
 
-schedule.every().minute.do(update_list)
-update_list()
 
 app = Flask(__name__)
+update_list()
+sched = BackgroundScheduler(daemon=True)
+sched.add_job(update_list, 'interval', hours=1)
+sched.start()
 
 @app.route('/')
 def apk():
-    return render_template('list.html', beers=resolver.get_beer_list(), last_updated="")
+    global beers
+    global last_updated
+    return render_template('list.html', beers=beers, last_updated=last_updated)
 
 if __name__ == '__main__':
     app.run()

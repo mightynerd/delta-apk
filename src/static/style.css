@@ -12,6 +12,13 @@ h1
     font-size: 40pt;
 }
 
+h2
+{
+    text-align: center;
+    font-size: 10pt;
+    padding-bottom: 20pt;
+}
+
 table
 {
     margin-left: auto;
